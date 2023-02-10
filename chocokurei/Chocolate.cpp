@@ -1,25 +1,36 @@
 ﻿#include "stdafx.h"
 #include "Chocolate.h"
 
-Chocolate::Chocolate(int type)
-	: type_(type)
+struct ChocolateFeature
 {
-	features_.resize(ChocolateTypesCount);
+	String name;
+	bool isHeartShape;
+	bool isSquareShape;
+	bool isRoundShape;
+	bool isBrown;
+	bool isWhite;
+};
 
-	//                               name,      heart,square,round, brown,white
+static const Array<ChocolateFeature> gChocolateFeatures = {
+	// name,      heart, square,round, brown, white
+	{ U"choco0",  true,  false, false, true,  false }, //brown-heart
+	{ U"choco1",  true,  false, false, false, true  }, //white-heart
+	{ U"choco2",  true,  false, false, false, false }, //red-heart
+	{ U"choco3",  true,  false, false, false, false }, //purple-heart
+	{ U"choco4",  false, true,  false, true,  false }, //brown-square
+	{ U"choco5",  false, true,  false, false, true  }, //white-square
+	{ U"choco6",  false, true,  false, true,  true  }, //white&brown-square(1)
+	{ U"choco7",  false, true,  false, true,  true  }, //white&brown-square(2)
+	{ U"choco8",  false, false, true,  false, true  }, //white-round
+	{ U"choco9",  false, false, true,  true,  false }, //brown-round
+	{ U"choco10", false, false, true,  true,  false }, //brown-round
+	{ U"choco11", false, false, true,  false, true  }, //white-round-face
+};
 
-	features_[0] = ChocolateFeature{ U"choco0", true, false, false, true, false }; //brown-heart
-	features_[1] = ChocolateFeature{ U"choco1", true, false, false, false, true }; //white-heart
-	features_[2] = ChocolateFeature{ U"choco2", true, false, false, false, false }; //red-heart
-	features_[3] = ChocolateFeature{ U"choco3", true, false, false, false, false }; //purple-heart
-	features_[4] = ChocolateFeature{ U"choco4", false, true, false, true, false }; //brown-square
-	features_[5] = ChocolateFeature{ U"choco5", false, true, false, false, true }; //white-square
-	features_[6] = ChocolateFeature{ U"choco6", false, true, false, true, true }; //white&brown-square(1)
-	features_[7] = ChocolateFeature{ U"choco7", false, true, false, true, true }; //white&brown-square(2)
-	features_[8] = ChocolateFeature{ U"choco8", false, false, true, false, true }; //white-round
-	features_[9] = ChocolateFeature{ U"choco9", false, false, true, true, false }; //brown-round
-	features_[10] = ChocolateFeature{ U"choco10", false, false, true, true, false }; //brown-round
-	features_[11] = ChocolateFeature{ U"choco11", false, false, true, false, true }; //white-round-face
+Chocolate::Chocolate(int type)
+	: type_(type), pos_{ 0, -100 }
+{
+	
 }
 
 void Chocolate::update()
@@ -28,5 +39,14 @@ void Chocolate::update()
 
 void Chocolate::draw() const
 {
-	TextureAsset(features_[type_].name).drawAt(Scene::Center()); //temp
+	auto& feature = gChocolateFeatures[type_];
+
+	TextureAsset(feature.name).drawAt(pos_);
+}
+
+void Chocolate::setTargetPos(const Vec2& targetPos)
+{
+	targetPos_ = targetPos;
+
+	swMoveToTarget_.restart();
 }

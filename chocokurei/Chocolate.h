@@ -2,16 +2,6 @@
 
 class Chocolate
 {
-	struct ChocolateFeature
-	{
-		String name;
-		bool isHeartShape;
-		bool isSquareShape;
-		bool isRoundShape;
-		bool isBrown;
-		bool isWhite;
-	};
-
 public:
 	Chocolate(int type);
 
@@ -19,8 +9,11 @@ public:
 
 	void draw() const;
 
+	void setTargetPos(const Vec2& targetPos);
+
 private:
 	int type_; // 0..11
-
-	Array<ChocolateFeature> features_;
+	Vec2 pos_;
+	Vec2 targetPos_;
+	Stopwatch swMoveToTarget_;
 };
