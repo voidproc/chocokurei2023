@@ -26,6 +26,7 @@ void Main()
 	TextureAsset::Register(U"bottomshade", U"images/bottom-shade.png");
 	TextureAsset::Register(U"pronamachan", U"images/pronama-chan.png");
 	TextureAsset::Register(U"balloon", U"images/balloon.png");
+	TextureAsset::Register(U"choco1", U"images/choco1.png");
 
 	// シーン
 

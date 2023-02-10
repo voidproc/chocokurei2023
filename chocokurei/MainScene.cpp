@@ -2,8 +2,9 @@
 #include "MainScene.h"
 
 MainScene::MainScene(const InitData& init)
-	: IScene{ init }
+	: IScene{ init }, choco_{1}
 {
+
 }
 
 void MainScene::update()
@@ -55,4 +56,6 @@ void MainScene::draw() const
 
 		FontAsset(U"main")(msg_).draw(basePos.movedBy(42, 12), Palette::Black);
 	}
+
+	choco_.draw();
 }

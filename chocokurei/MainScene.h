@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "Chocolate.h"
+
 class MainScene : public App::Scene
 {
 public:
@@ -15,4 +17,6 @@ private:
 	Stopwatch swMsgRefresh_{ StartImmediately::Yes };
 
 	String msg_;
+
+	Chocolate choco_;
 };
