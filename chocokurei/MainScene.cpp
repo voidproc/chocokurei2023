@@ -2,9 +2,16 @@
 #include "MainScene.h"
 
 MainScene::MainScene(const InitData& init)
-	: IScene{ init }, choco_{1}
+	: IScene{ init }, choco_{}
 {
+	for (int i : step(9))
+	{
+		choco_.emplace_back<Chocolate>(1);
 
+		const int x = (i % 3) * 20 + 24;
+		const int y = (i / 3) * 20 + 24;
+		choco_.back().moveTo(Vec2(x, y), 0.8 + Random(-0.2, 0.2));
+	}
 }
 
 void MainScene::update()
@@ -36,7 +43,10 @@ void MainScene::update()
 		swMsgRefresh_.restart();
 	}
 
-	choco_.update();
+	for (auto& choco : choco_)
+	{
+		choco.update();
+	}
 }
 
 void MainScene::draw() const
@@ -59,5 +69,8 @@ void MainScene::draw() const
 		FontAsset(U"main")(msg_).draw(basePos.movedBy(42, 12), Palette::Black);
 	}
 
-	choco_.draw();
+	for (const auto& choco : choco_)
+	{
+		choco.draw();
+	}
 }

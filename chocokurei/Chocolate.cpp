@@ -30,7 +30,6 @@ static const Array<ChocolateFeature> gChocolateFeatures = {
 Chocolate::Chocolate(int type)
 	: type_(type), pos_{ 0, -100 }
 {
-	moveTo(Vec2{ 100, 100 }, 0.5);
 }
 
 void Chocolate::update()

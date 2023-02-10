@@ -18,5 +18,5 @@ private:
 
 	String msg_;
 
-	Chocolate choco_;
+	Array<Chocolate> choco_;
 };
