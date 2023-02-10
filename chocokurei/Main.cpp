@@ -10,8 +10,6 @@ void Main()
 	int scale = DefaultSceneScale;
 	Window::Resize(SceneSize * scale);
 
-	// フォントがぼやけないためのテクスチャフィルタ、レンダーステート設定
-
 	Scene::SetTextureFilter(TextureFilter::Nearest);
 
 	const ScopedRenderStates2D renderState{ SamplerState::ClampNearest };
