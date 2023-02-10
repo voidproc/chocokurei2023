@@ -9,7 +9,7 @@ public:
 
 	void draw() const;
 
-	void setTargetPos(const Vec2& targetPos);
+	void moveTo(const Vec2& targetPos);
 
 private:
 	int type_; // 0..11

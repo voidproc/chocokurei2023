@@ -30,7 +30,7 @@ static const Array<ChocolateFeature> gChocolateFeatures = {
 Chocolate::Chocolate(int type)
 	: type_(type), pos_{ 0, -100 }
 {
-	setTargetPos(Vec2{ 100, 100 });
+	moveTo(Vec2{ 100, 100 });
 }
 
 void Chocolate::update()
@@ -51,7 +51,7 @@ void Chocolate::draw() const
 	TextureAsset(feature.name).drawAt(pos_);
 }
 
-void Chocolate::setTargetPos(const Vec2& targetPos)
+void Chocolate::moveTo(const Vec2& targetPos)
 {
 	targetPos_ = targetPos;
 	pos_.x = targetPos.x;
