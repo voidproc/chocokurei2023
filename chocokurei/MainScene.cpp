@@ -35,6 +35,8 @@ void MainScene::update()
 
 		swMsgRefresh_.restart();
 	}
+
+	choco_.update();
 }
 
 void MainScene::draw() const

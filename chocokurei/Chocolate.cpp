@@ -30,11 +30,18 @@ static const Array<ChocolateFeature> gChocolateFeatures = {
 Chocolate::Chocolate(int type)
 	: type_(type), pos_{ 0, -100 }
 {
-	
+	setTargetPos(Vec2{ 100, 100 });
 }
 
 void Chocolate::update()
 {
+	if (swMoveToTarget_.isRunning())
+	{
+		const double t = Clamp(swMoveToTarget_.sF() / 1.0, 0.0, 1.0);
+		const double ease = (EaseOutBounce(t) + EaseOutQuint(t)) / 2.0;
+
+		pos_.y = srcPos_.y + (targetPos_.y - srcPos_.y) * ease;
+	}
 }
 
 void Chocolate::draw() const
@@ -47,6 +54,8 @@ void Chocolate::draw() const
 void Chocolate::setTargetPos(const Vec2& targetPos)
 {
 	targetPos_ = targetPos;
+	pos_.x = targetPos.x;
+	srcPos_ = pos_;
 
 	swMoveToTarget_.restart();
 }
