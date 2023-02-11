@@ -39,3 +39,8 @@ const Array<String> FailedText = {
 	U"あっ…　まあ、いいけどね",
 };
 
+const Array<String> TimeUpText = {
+	U"時間切れ～　またこんどね！",
+	U"ずいぶん悩むのね…",
+};
+

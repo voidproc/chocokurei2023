@@ -21,9 +21,9 @@ void TitleScene::draw() const
 {
 	Scene::SetBackground(Color(U"#ffccdf"));
 
-	Rect(Arg::center = Scene::Center().movedBy(0, -8), Size(Scene::Width(), 48)).draw();
-	FontAsset(U"mainb")(U"プロ生ちゃんチョコくれい２０２３").drawAt(Scene::Center().movedBy(0, -16), Palette::Brown);
-	FontAsset(U"main")(U"Ver.20230214").drawAt(Scene::Center().movedBy(0, 0), Palette::Indianred);
+	Rect(Arg::center = Scene::Center(), Size(Scene::Width(), 48)).draw();
+	FontAsset(U"mainb")(U"プロ生ちゃんチョコくれい").drawAt(Scene::Center().movedBy(0, -8), Palette::Brown);
+	FontAsset(U"main")(U"Ver.20230214").drawAt(Scene::Center().movedBy(0, 8), Palette::Indianred);
 
 	{
 		const ColorF textColor = ColorF(Palette::White, Periodic::Square0_1(700ms));

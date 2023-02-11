@@ -17,7 +17,8 @@ private:
 	Stopwatch swBalloonTextAnimate_;
 	String balloonText_;
 	Array<Chocolate> choco_;
-	int level_ = 0;
+	int level_ = 1;
+	int levelAdjust_ = 0;
 	int column_ = 3;
 	int row_ = 3;
 	Condition condition_;
@@ -27,6 +28,7 @@ private:
 	Optional<Chocolate*> chocoMouseOver_;
 	Stopwatch swNextStage_;
 	Timer timerPronamachanAnimate_;
+	Stopwatch swAnswer_;
 
 	void setNewStage_();
 	void setBalloonText_(StringView text);

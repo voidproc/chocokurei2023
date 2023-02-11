@@ -20,6 +20,22 @@ void MainScene::update()
 
 	checkChocoAreaMouseOver_();
 
+
+	// 回答残り時間
+
+	if (swAnswer_.isRunning() && swAnswer_.sF() > 4.0)
+	{
+
+		swAnswer_.pause();
+		setBalloonText_(TimeUpText.choice());
+		levelAdjust_ = -1;
+		swWaitMouseAction_.pause();
+		swNextStage_.restart();
+	}
+
+
+	// マウス操作
+
 	if (isMouseActionEnabled_())
 	{
 		// チョコがクリックされた
@@ -31,11 +47,16 @@ void MainScene::update()
 			if (isFullFilledCondition_(**chocoMouseOver_, condition_))
 			{
 				setBalloonText_(SuccessText.choice());
+				levelAdjust_ = 1;
 			}
 			else
 			{
 				setBalloonText_(FailedText.choice());
+				levelAdjust_ = -1;
 			}
+
+			// 回答タイマーストップ
+			swAnswer_.pause();
 
 			// マウス操作ストップ
 			swWaitMouseAction_.pause();
@@ -83,6 +104,13 @@ void MainScene::draw() const
 		choco.draw();
 	}
 
+	// 回答残り時間
+
+	const double barWidth = Clamp(108 * (1 - swAnswer_.sF() / 4.0), 0.01, 108.0);
+	RectF{ Scene::Center().movedBy(-108 / 2, 46), SizeF(108, 4) }.draw(Palette::Black);
+	RectF{ Scene::Center().movedBy(-108 / 2, 46), SizeF(barWidth, 4) }.draw(Palette::White);
+
+
 	// マウス位置
 
 	if (isMouseActionEnabled_())
@@ -97,7 +125,8 @@ void MainScene::draw() const
 
 void MainScene::setNewStage_()
 {
-	level_ += 1;
+	level_ = Max(level_ + levelAdjust_, 1);
+	levelAdjust_ = 0;
 
 	if (level_ > 16)
 	{
@@ -167,6 +196,9 @@ void MainScene::setNewStage_()
 
 	// 少し待機した後、マウス操作を有効にする
 	swWaitMouseAction_.restart();
+
+	// 回答タイマー
+	swAnswer_.restart();
 }
 
 void MainScene::setBalloonText_(StringView text)
