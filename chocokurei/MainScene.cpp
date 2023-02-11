@@ -211,6 +211,18 @@ void MainScene::drawPronamachan_() const
 {
 	const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
 
+	if (levelAdjust_ == -1 && swNextStage_.isRunning())
+	{
+		double xd = 0;
+		if (swNextStage_.sF() < 0.3)
+		{
+			xd = 1.5 * Periodic::Sine1_1(0.15s);
+		}
+
+		TextureAsset(U"pronama-chan-fail").draw(basePos.movedBy(xd, 0));
+		return;
+	}
+
 	int frame = (int)((timerPronamachanAnimate_.duration().count() - timerPronamachanAnimate_.sF()) / 0.5 * 8);
 	if (frame >= 8)
 	{
@@ -227,7 +239,8 @@ void MainScene::drawBalloon_() const
 	TextureAsset(U"balloon").draw(basePos);
 
 	StringView balloonText = balloonText_.substrView(0, (int)(32 * swBalloonTextAnimate_.sF()));
-	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12), Palette::Black);
+	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12 + 1), ColorF(0, 0.1));
+	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12), Color(U"#421d12"));
 }
 
 void MainScene::drawBg_() const

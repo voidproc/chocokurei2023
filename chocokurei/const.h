@@ -5,6 +5,9 @@ inline const int DefaultSceneScale = 4;
 inline const int ChocolateTypesCount = 12;
 inline const int ConditionCount = 8;
 
+inline const String TitleText = U"プロ生ちゃんチョコくれい";
+inline const String VersionText = U"Ver.20230214";
+
 inline const Array<String> ConditionText = {
 	U"すきなチョコ",
 	U"ハート型のチョコ",
@@ -23,6 +26,7 @@ inline const Array<String> ConditionTextEnd = {
 	U"をどうぞ",
 	U"を取ってね",
 	U"を食べてね",
+	U"を食べてみて",
 };
 
 const Array<String> SuccessText = {
@@ -41,6 +45,6 @@ const Array<String> FailedText = {
 
 const Array<String> TimeUpText = {
 	U"時間切れ～　またこんどね！",
-	U"ずいぶん悩むのね…",
+	U"ずいぶん悩むんだね…",
 };
 
