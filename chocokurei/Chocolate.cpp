@@ -28,10 +28,10 @@ static const Array<ChocolateFeature> gChocolateFeatures = {
 };
 
 Chocolate::Chocolate(int type)
-	: type_(type), feature_{ gChocolateFeatures[type] }, pos_{
-	0, -100
-}, targetPos_{}, srcPos_{}, moveTimeSec_(0), swMoveToTarget_{}
+	: type_(type), feature_{ gChocolateFeatures[type] }, pos_{ 0, -100 }
 {
+	timerAnimate_.set(Duration(Random(4.0, 8.0)));
+	timerAnimate_.start();
 }
 
 void Chocolate::update()
@@ -43,6 +43,12 @@ void Chocolate::update()
 
 		pos_.y = srcPos_.y + (targetPos_.y - srcPos_.y) * ease;
 	}
+
+	if (timerAnimate_.reachedZero())
+	{
+		timerAnimate_.set(Duration(Random(4.0, 6.0)));
+		timerAnimate_.start();
+	}
 }
 
 void Chocolate::draw() const
@@ -50,7 +56,18 @@ void Chocolate::draw() const
 	const auto texture = TextureAsset(feature_.name);
 	int frame = 0;
 
-	texture(Rect(16)).drawAt(pos_);
+	if (texture.width() > 16)
+	{
+		//アニメあり
+
+		frame = (int)((timerAnimate_.duration().count() - timerAnimate_.sF()) / 0.5 * 8);
+		if (frame >= 8)
+		{
+			frame = 0;
+		}
+	}
+
+	texture(Rect(16).movedBy(frame * 16, 0)).drawAt(pos_);
 }
 
 void Chocolate::setPos(const Vec2& pos)

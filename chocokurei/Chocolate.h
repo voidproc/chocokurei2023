@@ -35,4 +35,5 @@ private:
 	Vec2 srcPos_;
 	double moveTimeSec_;
 	Stopwatch swMoveToTarget_;
+	Timer timerAnimate_;
 };
