@@ -27,6 +27,8 @@ public:
 
 	const ChocolateFeature& feature() const;
 
+	void take();
+
 private:
 	int type_;
 	const ChocolateFeature& feature_;
@@ -36,4 +38,5 @@ private:
 	double moveTimeSec_;
 	Stopwatch swMoveToTarget_;
 	Timer timerAnimate_;
+	Stopwatch swTake_;
 };

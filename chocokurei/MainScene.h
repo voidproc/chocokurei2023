@@ -21,11 +21,19 @@ private:
 	int column_ = 3;
 	int row_ = 3;
 	Condition condition_;
+	Stopwatch swWaitMouseAction_;
+	Array<RectF> chocoArea_;
+	Optional<RectF> chocoAreaMouseOver_;
+	Optional<Chocolate*> chocoMouseOver_;
+	Stopwatch swNextStage_;
+	Timer timerPronamachanAnimate_;
 
 	void setNewStage_();
 	void setBalloonText_(StringView text);
 	void drawPronamachan_() const;
 	void drawBalloon_() const;
+	void drawBg_() const;
 	bool isFullFilledCondition_(const Chocolate& target, Condition cond);
-
+	bool isMouseActionEnabled_() const;
+	void checkChocoAreaMouseOver_();
 };

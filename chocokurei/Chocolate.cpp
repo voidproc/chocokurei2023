@@ -17,6 +17,7 @@ static const Array<ChocolateFeature> gChocolateFeatures = {
 	{ U"choco11", false, false, true,  false, true  }, //white-round-face
 };
 
+
 Chocolate::Chocolate(int type)
 	: type_(type), feature_{ gChocolateFeatures[type] }, pos_{ 0, -100 }
 {
@@ -57,7 +58,23 @@ void Chocolate::draw() const
 		}
 	}
 
-	texture(Rect(16).movedBy(frame * 16, 0)).drawAt(pos_);
+	// takeされたら少し点滅して消える
+
+	double alpha = 1.0;
+
+	if (swTake_.isRunning())
+	{
+		if (swTake_.sF() < 0.5)
+		{
+			alpha = 0.5 + 0.5 * Periodic::Square0_1(0.08s);
+		}
+		else
+		{
+			alpha = 0;
+		}
+	}
+
+	texture(Rect(16).movedBy(frame * 16, 0)).drawAt(pos_, ColorF(Palette::White, alpha));
 }
 
 void Chocolate::setPos(const Vec2& pos)
@@ -83,5 +100,10 @@ int Chocolate::type() const
 const ChocolateFeature& Chocolate::feature() const
 {
 	return feature_;
+}
+
+void Chocolate::take()
+{
+	swTake_.restart();
 }
 
