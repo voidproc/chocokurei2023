@@ -32,11 +32,6 @@ void Main()
 	FontAsset::Register(U"main", 12, U"fonts/k8x12L.ttf", FontStyle::Bitmap);
 	FontAsset::Register(U"mainb", 12, U"fonts/k8x12L.ttf", FontStyle::BoldBitmap);
 
-	//TextureAsset::Register(U"bottomshade", U"images/bottom-shade.png");
-	//TextureAsset::Register(U"pronama-chan", U"images/pronama-chan.png");
-	//TextureAsset::Register(U"balloon", U"images/balloon.png");
-	//TextureAsset::Register(U"choco1", U"images/choco1.png");
-
 	loadImages();
 
 	// シーン

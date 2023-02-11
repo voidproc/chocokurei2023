@@ -1,16 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Chocolate.h"
 
-//struct ChocolateFeature
-//{
-//	String name;
-//	bool isHeartShape;
-//	bool isSquareShape;
-//	bool isRoundShape;
-//	bool isBrownColor;
-//	bool isWhiteColor;
-//};
-//
 static const Array<ChocolateFeature> gChocolateFeatures = {
 	// name,      heart, square,round, brown, white
 	{ U"choco0",  true,  false, false, true,  false }, //brown-heart
