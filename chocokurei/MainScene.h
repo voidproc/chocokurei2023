@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Chocolate.h"
+#include "Condition.h"
 
 class MainScene : public App::Scene
 {
@@ -13,10 +14,18 @@ public:
 
 private:
 	Stopwatch swScene_{ StartImmediately::Yes };
-
-	Stopwatch swMsgRefresh_{ StartImmediately::Yes };
-
-	String msg_;
-
+	Stopwatch swBalloonTextAnimate_;
+	String balloonText_;
 	Array<Chocolate> choco_;
+	int level_ = 0;
+	int column_ = 3;
+	int row_ = 3;
+	Condition condition_;
+
+	void setNewStage_();
+	void setBalloonText_(StringView text);
+	void drawPronamachan_() const;
+	void drawBalloon_() const;
+	bool isFullFilledCondition_(const Chocolate& target, Condition cond);
+
 };

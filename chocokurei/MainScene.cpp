@@ -4,18 +4,106 @@
 MainScene::MainScene(const InitData& init)
 	: IScene{ init }, choco_{}
 {
-	for (int i : step(9))
-	{
-		choco_.emplace_back<Chocolate>(1);
-
-		const int x = (i % 3) * 20 + 24;
-		const int y = (i / 3) * 20 + 24;
-		choco_.back().moveTo(Vec2(x, y), 0.8 + Random(-0.2, 0.2));
-	}
+	setNewStage_();
 }
 
 void MainScene::update()
 {
+	if (KeySpace.down())
+	{
+		setNewStage_();
+	}
+
+	for (auto& choco : choco_)
+	{
+		choco.update();
+	}
+}
+
+void MainScene::draw() const
+{
+	Scene::SetBackground(Color(U"#dc678c"));
+
+	{
+		const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
+		TextureAsset(U"bottom-shade").draw(basePos);
+	}
+
+	drawPronamachan_();
+
+	drawBalloon_();
+
+	TextureAsset(U"box-{}x{}"_fmt(row_, column_)).drawAt(Scene::Center());
+
+	for (const auto& choco : choco_)
+	{
+		choco.draw();
+	}
+}
+
+void MainScene::setNewStage_()
+{
+	level_ += 1;
+
+	if (level_ > 16)
+	{
+		row_ = 4;
+		column_ = 6;
+	}
+	else if (level_ > 12)
+	{
+		row_ = 4;
+		column_ = 5;
+	}
+	else if (level_ > 8)
+	{
+		row_ = 4;
+		column_ = 4;
+	}
+	else if (level_ > 4)
+	{
+		row_ = 3;
+		column_ = 4;
+	}
+	else
+	{
+		row_ = 3;
+		column_ = 3;
+	}
+
+	// チョコ生成
+
+	choco_.clear();
+
+	for (int i : step(row_ * column_))
+	{
+		const int chocoType = Random(0, ChocolateTypesCount - 1);
+		choco_.emplace_back<Chocolate>(chocoType);
+
+		choco_.back().setPos(Vec2(0, Random(-30, -100)));
+
+		const double distance = 16.0;
+		const double x = (i % column_) * distance - (distance * (column_ - 1)) / 2;
+		const double y = (i / column_) * distance - (distance * (row_ - 1)) / 2;
+		choco_.back().moveTo(Vec2(x, y) + Scene::Center(), 0.8 + Random(-0.2, 0.2));
+	}
+
+	// 選んでも大丈夫な条件が出るまで待つ
+
+	bool validCondition = false;
+	while (!validCondition)
+	{
+		condition_ = static_cast<Condition>(Random(0, ConditionCount - 1));
+
+		for (const auto& choco : choco_)
+		{
+			if (isFullFilledCondition_(choco, condition_))
+			{
+				validCondition = true;
+			}
+		}
+	}
+
 	const Array<String> condMsg = {
 		U"すきなチョコ",
 		U"ハート型のチョコ",
@@ -36,41 +124,73 @@ void MainScene::update()
 		U"を食べてね",
 	};
 
-	if (msg_.empty() || swMsgRefresh_.sF() > 5.0)
-	{
-		msg_ = condMsg.choice() + endMsg.choice();
-
-		swMsgRefresh_.restart();
-	}
-
-	for (auto& choco : choco_)
-	{
-		choco.update();
-	}
+	setBalloonText_(condMsg[static_cast<int>(condition_)] + endMsg.choice());
 }
 
-void MainScene::draw() const
+void MainScene::setBalloonText_(StringView text)
 {
-	Scene::SetBackground(Color(U"#dc678c"));
+	balloonText_ = text;
+	swBalloonTextAnimate_.restart();
+}
 
+void MainScene::drawPronamachan_() const
+{
+	const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
+
+	TextureAsset(U"pronama-chan").draw(basePos);
+}
+
+void MainScene::drawBalloon_() const
+{
+	const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
+
+	TextureAsset(U"balloon").draw(basePos);
+
+	StringView balloonText = balloonText_.substrView(0, (int)(32 * swBalloonTextAnimate_.sF()));
+	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12), Palette::Black);
+}
+
+bool MainScene::isFullFilledCondition_(const Chocolate& target, Condition cond)
+{
+	switch (cond)
 	{
-		// 基準点
-		const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
+	case Condition::Any:
+		return true;
 
-		// 影
-		TextureAsset(U"bottomshade").draw(basePos);
+	case Condition::IsHeartShape:
+		return target.feature().isHeartShape;
 
-		// プロ生ちゃん
-		TextureAsset(U"pronamachan").draw(basePos);
+	case Condition::IsRoundShape:
+		return target.feature().isRoundShape;
 
-		// 吹き出し
-		TextureAsset(U"balloon").draw(basePos);
+	case Condition::IsSquareShape:
+		return target.feature().isSquareShape;
 
-		FontAsset(U"main")(msg_).draw(basePos.movedBy(42, 12), Palette::Black);
+	case Condition::IsBrownColor:
+		return target.feature().isBrownColor;
+
+	case Condition::IsWhiteColor:
+		return target.feature().isWhiteColor;
+
+	case Condition::IsMostAmount:
+	case Condition::IsLeastAmount:
+		Array<int> typeCount;
+		typeCount.resize(ChocolateTypesCount, 0);
+		for (const auto& choco : choco_)
+		{
+			typeCount[choco.type()]++;
+		}
+		
+		if (cond == Condition::IsMostAmount)
+		{
+			return typeCount[target.type()] == *std::max_element(typeCount.begin(), typeCount.end());
+		}
+		else if (cond == Condition::IsLeastAmount)
+		{
+			return typeCount[target.type()] == *std::min_element(typeCount.begin(), typeCount.end());
+		}
+		return false;
 	}
 
-	for (const auto& choco : choco_)
-	{
-		choco.draw();
-	}
+	return false;
 }

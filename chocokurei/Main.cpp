@@ -2,6 +2,17 @@
 #include "TitleScene.h"
 #include "MainScene.h"
 
+void loadImages()
+{
+	for (const auto& file : FileSystem::DirectoryContents(U"images", Recursive::No))
+	{
+		if (FileSystem::Extension(file) == U"png")
+		{
+			TextureAsset::Register(FileSystem::BaseName(file), file);
+		}
+	}
+}
+
 void Main()
 {
 	Scene::Resize(SceneSize);
@@ -21,19 +32,21 @@ void Main()
 	FontAsset::Register(U"main", 12, U"fonts/k8x12L.ttf", FontStyle::Bitmap);
 	FontAsset::Register(U"mainb", 12, U"fonts/k8x12L.ttf", FontStyle::BoldBitmap);
 
-	TextureAsset::Register(U"bottomshade", U"images/bottom-shade.png");
-	TextureAsset::Register(U"pronamachan", U"images/pronama-chan.png");
-	TextureAsset::Register(U"balloon", U"images/balloon.png");
-	TextureAsset::Register(U"choco1", U"images/choco1.png");
+	//TextureAsset::Register(U"bottomshade", U"images/bottom-shade.png");
+	//TextureAsset::Register(U"pronama-chan", U"images/pronama-chan.png");
+	//TextureAsset::Register(U"balloon", U"images/balloon.png");
+	//TextureAsset::Register(U"choco1", U"images/choco1.png");
+
+	loadImages();
 
 	// シーン
 
 	App manager;
-	manager.add<TitleScene>(U"TitleScene");
 	manager.add<MainScene>(U"MainScene");
+	manager.add<TitleScene>(U"TitleScene");
 	manager.setFadeColor(Palette::Black);
-	manager.changeScene(U"TitleScene", 0ms);
-	//manager.changeScene(U"MainScene", 0ms);
+	//manager.changeScene(U"TitleScene", 0ms);
+	manager.changeScene(U"MainScene", 0ms);
 
 	while (System::Update())
 	{

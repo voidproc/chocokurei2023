@@ -1,16 +1,16 @@
 ﻿#include "stdafx.h"
 #include "Chocolate.h"
 
-struct ChocolateFeature
-{
-	String name;
-	bool isHeartShape;
-	bool isSquareShape;
-	bool isRoundShape;
-	bool isBrown;
-	bool isWhite;
-};
-
+//struct ChocolateFeature
+//{
+//	String name;
+//	bool isHeartShape;
+//	bool isSquareShape;
+//	bool isRoundShape;
+//	bool isBrownColor;
+//	bool isWhiteColor;
+//};
+//
 static const Array<ChocolateFeature> gChocolateFeatures = {
 	// name,      heart, square,round, brown, white
 	{ U"choco0",  true,  false, false, true,  false }, //brown-heart
@@ -28,7 +28,9 @@ static const Array<ChocolateFeature> gChocolateFeatures = {
 };
 
 Chocolate::Chocolate(int type)
-	: type_(type), pos_{ 0, -100 }
+	: type_(type), feature_{ gChocolateFeatures[type] }, pos_{
+	0, -100
+}, targetPos_{}, srcPos_{}, moveTimeSec_(0), swMoveToTarget_{}
 {
 }
 
@@ -45,9 +47,15 @@ void Chocolate::update()
 
 void Chocolate::draw() const
 {
-	auto& feature = gChocolateFeatures[type_];
+	const auto texture = TextureAsset(feature_.name);
+	int frame = 0;
 
-	TextureAsset(feature.name).drawAt(pos_);
+	texture(Rect(16)).drawAt(pos_);
+}
+
+void Chocolate::setPos(const Vec2& pos)
+{
+	pos_ = pos;
 }
 
 void Chocolate::moveTo(const Vec2& targetPos, double timeSec)
@@ -59,3 +67,14 @@ void Chocolate::moveTo(const Vec2& targetPos, double timeSec)
 
 	swMoveToTarget_.restart();
 }
+
+int Chocolate::type() const
+{
+	return type_;
+}
+
+const ChocolateFeature& Chocolate::feature() const
+{
+	return feature_;
+}
+

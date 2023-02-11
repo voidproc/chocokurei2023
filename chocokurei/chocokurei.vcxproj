@@ -317,6 +317,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chocolate.h" />
+    <ClInclude Include="Condition.h" />
     <ClInclude Include="const.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="SharedData.h" />

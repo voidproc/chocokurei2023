@@ -800,5 +800,8 @@
     <ClInclude Include="Chocolate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Condition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
