@@ -55,6 +55,7 @@ void MainScene::update()
 			{
 				setBalloonText_(FailedText.choice());
 				levelAdjust_ = -1;
+				miss_++;
 			}
 
 			// 回答タイマーストップ
@@ -68,13 +69,28 @@ void MainScene::update()
 		}
 	}
 
-	// 次のステージへ？
+	// 次のステージかエンディングへ
 
 	if (swNextStage_.isRunning() && swNextStage_.sF() > 3.0)
 	{
 		swNextStage_.pause();
 
-		setNewStage_();
+		if (miss_ == 5)
+		{
+			getData().endingType = EndingType::Bad;
+
+			changeScene(U"EndingScene", 0ms);
+
+		}
+		else if (level_ > 20)
+		{
+			getData().endingType = EndingType::Good;
+
+			changeScene(U"EndingScene", 0ms);
+		}
+		else {
+			setNewStage_();
+		}
 	}
 
 	// アニメーション

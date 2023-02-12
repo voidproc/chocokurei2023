@@ -114,6 +114,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Chocolate.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -319,6 +320,8 @@
     <ClInclude Include="Chocolate.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="const.h" />
+    <ClInclude Include="EndingScene.h" />
+    <ClInclude Include="EndingType.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="SharedData.h" />
     <ClInclude Include="stdafx.h" />

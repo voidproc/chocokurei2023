@@ -30,6 +30,7 @@ private:
 	Stopwatch swNextStage_;
 	Timer timerPronamachanAnimate_;
 	Stopwatch swAnswer_;
+	int miss_ = 0;
 
 	void setNewStage_();
 	void setBalloonText_(StringView text);

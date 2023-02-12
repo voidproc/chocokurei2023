@@ -47,7 +47,8 @@ void TitleScene::draw() const
 	if (swFade_.isRunning())
 	{
 		const double t = swFade_.sF() / 1.0;
-		Scene::Rect().draw(ColorF(0, Min(1.0, 1.0 * EaseOutCubic(t))));
+		const double a = Min(1.0, 1.0 * EaseOutCubic(t));
+		Scene::Rect().draw(ColorF(0, a));
 	}
 
 }

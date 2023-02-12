@@ -1,6 +1,7 @@
 ﻿#include <Siv3D.hpp> // OpenSiv3D v0.6.6
 #include "TitleScene.h"
 #include "MainScene.h"
+#include "EndingScene.h"
 #include "const.h"
 
 void loadImages()
@@ -38,11 +39,15 @@ void Main()
 	// シーン
 
 	App manager;
-	manager.add<MainScene>(U"MainScene");
 	manager.add<TitleScene>(U"TitleScene");
+	manager.add<MainScene>(U"MainScene");
+	manager.add<EndingScene>(U"EndingScene");
+
 	manager.setFadeColor(Palette::Black);
+
 	manager.changeScene(U"MainScene", 0ms);
 	//manager.changeScene(U"TitleScene", 0ms);
+	//manager.changeScene(U"EndingScene", 0ms);
 
 	while (System::Update())
 	{

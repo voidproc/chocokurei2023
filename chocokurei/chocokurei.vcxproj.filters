@@ -153,6 +153,9 @@
     <ClCompile Include="Chocolate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -801,6 +804,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Condition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
