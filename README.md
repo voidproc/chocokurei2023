@@ -28,7 +28,7 @@
 
 ## ライセンス
 
-[MIT Lisence](./LICENSE)
+[MIT License](./LICENSE)
 
 ## スクリーンショット
 
