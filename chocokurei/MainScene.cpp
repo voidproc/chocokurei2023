@@ -211,12 +211,38 @@ void MainScene::setNewStage_()
 		chocoArea_.emplace_back(Vec2(x, y) - areaSize/2 + Scene::Center(), areaSize);
 	}
 
+
+	// 条件を選ぶ
+
+	Array<Condition> condToSelect = {
+		Condition::Any,
+		Condition::IsHeartShape,
+		Condition::IsRoundShape,
+		Condition::IsSquareShape,
+		Condition::IsBrownColor,
+		Condition::IsWhiteColor,
+		Condition::IsMostAmount,
+		Condition::IsLeastAmount,
+	};
+
+	DiscreteDistribution condDist(
+	{
+		2,
+		10,
+		10,
+		10,
+		9,
+		9,
+		25,
+		25,
+	});
+
 	// 選んでも大丈夫な条件が出るまで待つ
 
 	bool validCondition = false;
 	while (!validCondition)
 	{
-		condition_ = static_cast<Condition>(Random(0, ConditionCount - 1));
+		condition_ = DiscreteSample(condToSelect, condDist);
 
 		for (const auto& choco : choco_)
 		{

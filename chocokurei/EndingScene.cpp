@@ -22,7 +22,7 @@ void EndingScene::update()
 		}
 	}
 
-	if (swText_.sF() > 5.0 && textLine_ == ((getData().endingType == EndingType::Good ? 6 : 5) - 1))
+	if (swText_.sF() > 5.0 && textLine_ == ((getData().endingType == EndingType::Good ? 6 : 5) - 1) && Scene::Rect().leftClicked())
 	{
 		changeScene(U"TitleScene", 0s);
 	}
@@ -64,8 +64,12 @@ void EndingScene::drawGood_() const
 
 	if (swText_.sF() > 2.5 && textLine_ < 6 - 1)
 	{
-		TextureAsset(U"next").draw(Scene::Width() - 24, Scene::CenterF().y + 16, ColorF{ 1, Periodic::Square0_1(0.5s) });
+		TextureAsset(U"next").draw(Scene::Width() - 24, Scene::CenterF().y + 8, ColorF{ 1, Periodic::Square0_1(0.5s) });
 	}
+
+	FontAsset(U"main")(U"プレイしてくれてありがとう!\nこのゲームはvoidProcが2023年に作りました.")
+		.drawAt(Scene::Rect().bottomCenter().movedBy(0, -18), ColorF{1, 0.5});
+
 }
 
 void EndingScene::drawBad_() const
