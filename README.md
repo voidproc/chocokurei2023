@@ -22,6 +22,9 @@
 - Visual Studio 2022
 - [OpenSiv3D](https://github.com/Siv3D/OpenSiv3D) v0.6.6
 
+## ダウンロード
+
+- [chocokurei2023_v2023021201.zip](https://github.com/voidproc/chocokurei2023/releases/download/v2023021201/chocokurei2023_v2023021201.zip)
 
 ## ライセンス
 
