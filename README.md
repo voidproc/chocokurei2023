@@ -29,4 +29,4 @@
 
 ## スクリーンショット
 
-![screenshot1](./screenshots/1.png)
+![screenshot1](./screenshots/01.png)
