@@ -17,6 +17,8 @@ void loadImages()
 
 void Main()
 {
+	Scene::SetBackground(Palette::Black);
+
 	Window::SetTitle(U"chocokurei2023 {}"_fmt(VersionText));
 
 	Scene::Resize(SceneSize);
@@ -28,8 +30,6 @@ void Main()
 	Scene::SetTextureFilter(TextureFilter::Nearest);
 
 	const ScopedRenderStates2D renderState{ SamplerState::ClampNearest };
-
-	Scene::SetBackground(Palette::Black);
 
 	// アセット
 
@@ -48,8 +48,6 @@ void Main()
 	manager.setFadeColor(Palette::Black);
 
 	manager.changeScene(U"MainScene", 0ms);
-	//manager.changeScene(U"TitleScene", 0ms);
-	//manager.changeScene(U"EndingScene", 0ms);
 
 	while (System::Update())
 	{
