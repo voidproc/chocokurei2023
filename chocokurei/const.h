@@ -1,12 +1,12 @@
 ﻿#pragma once
 
 inline const Size SceneSize{ 168, 168 };
-inline const int DefaultSceneScale = 4;
+inline const int DefaultSceneScale = 3;
 inline const int ChocolateTypesCount = 12;
 inline const int ConditionCount = 8;
 
 inline const String TitleText = U"プロ生ちゃんチョコくれい";
-inline const String VersionText = U"Ver.20230212";
+inline const String VersionText = U"Ver.2023021201";
 
 inline const Array<String> ConditionText = {
 	U"すきなチョコ",

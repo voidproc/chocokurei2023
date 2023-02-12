@@ -12,4 +12,5 @@ public:
 private:
 	Stopwatch swScene_{ StartImmediately::Yes };
 	Stopwatch swFade_;
+	int scale_;
 };

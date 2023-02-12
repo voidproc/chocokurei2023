@@ -3,7 +3,7 @@
 #include "const.h"
 
 TitleScene::TitleScene(const InitData& init)
-	: IScene{ init }
+	: IScene{ init }, scale_(DefaultSceneScale)
 {
 }
 
@@ -14,6 +14,18 @@ void TitleScene::update()
 		if (Scene::Rect().leftClicked() && not swFade_.isRunning())
 		{
 			swFade_.restart();
+		}
+
+		if (KeyUp.down())
+		{
+			scale_ = Clamp(scale_ + 1, 2, 8);
+			Window::Resize(SceneSize * scale_);
+		}
+
+		if (KeyDown.down())
+		{
+			scale_ = Clamp(scale_ - 1, 2, 8);
+			Window::Resize(SceneSize * scale_);
 		}
 	}
 
@@ -39,8 +51,12 @@ void TitleScene::draw() const
 
 	if (swScene_.sF() > 1.0)
 	{
-		const ColorF textColor = ColorF(Palette::Brown, 0.5 + 0.5 * Periodic::Square0_1(1000ms));
-		FontAsset(U"main")(U"マウスクリックでスタートだよ").drawAt(Scene::Rect().bottomCenter().movedBy(0, -32), textColor);
+		const ColorF textColor = ColorF(Palette::Brown, 0.5 + 0.5 * Periodic::Square0_1(1s));
+		const Array<String> text = {
+			U"マウスクリックでスタートだよ",
+			U"↑・↓キーで画面の大きさを変えられるよ",
+		};
+		FontAsset(U"main")(text[1-(int)Periodic::Square0_1(4s)]).drawAt(Scene::Rect().bottomCenter().movedBy(0, -32), textColor);
 	}
 
 	// フェード
