@@ -9,7 +9,7 @@ TitleScene::TitleScene(const InitData& init)
 
 void TitleScene::update()
 {
-	if (swScene_.sF() > 2.0)
+	if (swScene_.sF() > 1.0)
 	{
 		if (Scene::Rect().leftClicked() && not swFade_.isRunning())
 		{
@@ -37,6 +37,7 @@ void TitleScene::draw() const
 	FontAsset(U"mainb")(TitleText).drawAt(Scene::Center().movedBy(0, -8), Palette::Brown);
 	FontAsset(U"main")(VersionText).drawAt(Scene::Center().movedBy(0, 8), Palette::Indianred);
 
+	if (swScene_.sF() > 1.0)
 	{
 		const ColorF textColor = ColorF(Palette::Brown, 0.5 + 0.5 * Periodic::Square0_1(1000ms));
 		FontAsset(U"main")(U"マウスクリックでスタートだよ").drawAt(Scene::Rect().bottomCenter().movedBy(0, -32), textColor);

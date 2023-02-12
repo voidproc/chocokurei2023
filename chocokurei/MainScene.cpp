@@ -133,7 +133,6 @@ void MainScene::draw() const
 		RectF{ Scene::Center().movedBy(-108 / 2, 46), SizeF(barWidth, 4) }.draw(Palette::White);
 	}
 
-
 	// マウス位置
 
 	if (isMouseActionEnabled_())
@@ -155,10 +154,8 @@ void MainScene::draw() const
 		}
 		const double t = Clamp(swNextStage_.sF() / 0.30, 0.0, 1.0);
 		Vec2 pos = (*chocoClicked_)->pos() - Vec2(0, 5.0 * EaseOutQuint(t));
-		TextureAsset(levelAdjust_ == 1 ? U"good" : U"miss").drawAt(pos, color);
+		TextureAsset(levelAdjust_ == 1 ? U"good" : U"miss").drawAt(pos.asPoint(), color);
 	}
-
-
 }
 
 void MainScene::setNewStage_()

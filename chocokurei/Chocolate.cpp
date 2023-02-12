@@ -21,7 +21,7 @@ static const Array<ChocolateFeature> gChocolateFeatures = {
 Chocolate::Chocolate(int type)
 	: type_(type), feature_{ gChocolateFeatures[type] }, pos_{ 0, -100 }
 {
-	timerAnimate_.set(Duration(Random(4.0, 8.0)));
+	timerAnimate_.set(Duration(Random(1.0, 4.0)));
 	timerAnimate_.start();
 }
 
