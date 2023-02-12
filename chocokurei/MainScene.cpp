@@ -106,15 +106,17 @@ void MainScene::draw() const
 {
 	drawBg_();
 
-	{
-		const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
-		TextureAsset(U"bottom-shade").draw(basePos);
-	}
-
 	drawPronamachan_();
 
 	drawBalloon_();
 
+	// ステージ名
+	const auto stagenameRect = RectF{ 0, 12, Scene::Width(), 16 };
+	stagenameRect.movedBy(0, 1).draw(ColorF{ 0, 0.1 });
+	stagenameRect.draw(ColorF{ U"#d13288" });
+	FontAsset(U"main")(U"～ ASSORTED CHOCOLATES No.{} ～"_fmt(level_)).drawAt(stagenameRect.center(), Palette::White);
+
+	// 箱
 	TextureAsset(U"box-{}x{}"_fmt(row_, column_)).drawAt(Scene::Center());
 
 	for (const auto& choco : choco_)
