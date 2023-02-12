@@ -1,1 +1,1 @@
-ls *.png | %{ "Resource(images/$($_.Name))" }
+ls *.png | ?{ -not ($_.BaseName -match "^_") } | %{ "Resource(images/$($_.Name))" }

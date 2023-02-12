@@ -1,5 +1,5 @@
-if ((-not $Env:ASEPRITE_EXE_PATH) -or (-not (Test-Path $Env:ASEPRITE_EXE_PATH))) {
-  Write-Host "���ϐ�'ASEPRITE_EXE_PATH'��Aseprite.exe�̃p�X��ݒ肵�Ă�������."
+﻿if ((-not $Env:ASEPRITE_EXE_PATH) -or (-not (Test-Path $Env:ASEPRITE_EXE_PATH))) {
+  Write-Host "環境変数'ASEPRITE_EXE_PATH'にAseprite.exeのパスを設定してください."
   exit
 }
 
