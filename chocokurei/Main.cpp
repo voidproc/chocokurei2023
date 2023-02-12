@@ -38,11 +38,11 @@ void Main()
 	// シーン
 
 	App manager;
-	manager.add<TitleScene>(U"TitleScene");
 	manager.add<MainScene>(U"MainScene");
+	manager.add<TitleScene>(U"TitleScene");
 	manager.setFadeColor(Palette::Black);
-	manager.changeScene(U"TitleScene", 0ms);
-	//manager.changeScene(U"MainScene", 0ms);
+	manager.changeScene(U"MainScene", 0ms);
+	//manager.changeScene(U"TitleScene", 0ms);
 
 	while (System::Update())
 	{

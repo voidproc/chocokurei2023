@@ -23,7 +23,7 @@ void MainScene::update()
 
 	// 回答残り時間
 
-	if (swAnswer_.isRunning() && swAnswer_.sF() > 4.0)
+	if (swAnswer_.isRunning() && swAnswer_.sF() > (4.0 + 1.1))
 	{
 
 		swAnswer_.pause();
@@ -106,9 +106,12 @@ void MainScene::draw() const
 
 	// 回答残り時間
 
-	const double barWidth = Clamp(108 * (1 - swAnswer_.sF() / 4.0), 0.01, 108.0);
-	RectF{ Scene::Center().movedBy(-108 / 2, 46), SizeF(108, 4) }.draw(Palette::Black);
-	RectF{ Scene::Center().movedBy(-108 / 2, 46), SizeF(barWidth, 4) }.draw(Palette::White);
+	if (swAnswer_.sF() > 1.1)
+	{
+		const double barWidth = Clamp(108 * (1 - (swAnswer_.sF() - 1.1) / 4.0), 0.01, 108.0);
+		RectF{ Scene::Center().movedBy(-108 / 2, 46), SizeF(108, 4) }.draw(Palette::Black);
+		RectF{ Scene::Center().movedBy(-108 / 2, 46), SizeF(barWidth, 4) }.draw(Palette::White);
+	}
 
 
 	// マウス位置
