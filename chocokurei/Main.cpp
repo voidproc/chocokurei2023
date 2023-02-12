@@ -42,8 +42,8 @@ void Main()
 
 	App manager;
 	manager.add<MainScene>(U"MainScene");
-	manager.add<EndingScene>(U"EndingScene");
 	manager.add<TitleScene>(U"TitleScene");
+	manager.add<EndingScene>(U"EndingScene");
 
 	manager.setFadeColor(Palette::Black);
 
