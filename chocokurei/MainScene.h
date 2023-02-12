@@ -26,6 +26,7 @@ private:
 	Array<RectF> chocoArea_;
 	Optional<RectF> chocoAreaMouseOver_;
 	Optional<Chocolate*> chocoMouseOver_;
+	Optional<Chocolate*> chocoClicked_;
 	Stopwatch swNextStage_;
 	Timer timerPronamachanAnimate_;
 	Stopwatch swAnswer_;

@@ -77,6 +77,11 @@ void Chocolate::draw() const
 	texture(Rect(16).movedBy(frame * 16, 0)).drawAt(pos_, ColorF(Palette::White, alpha));
 }
 
+Vec2 Chocolate::pos() const
+{
+	return pos_;
+}
+
 void Chocolate::setPos(const Vec2& pos)
 {
 	pos_ = pos;

@@ -44,6 +44,8 @@ void MainScene::update()
 		{
 			(*chocoMouseOver_)->take();
 
+			chocoClicked_ = *chocoMouseOver_;
+
 			if (isFullFilledCondition_(**chocoMouseOver_, condition_))
 			{
 				setBalloonText_(SuccessText.choice());
@@ -124,6 +126,21 @@ void MainScene::draw() const
 			chocoAreaMouseOver_->drawFrame(0.0, 1.0, ColorF(areaColor, Periodic::Square0_1(100ms)));
 		}
 	}
+
+	// チョコを取った時の判定文字
+
+	if (swNextStage_.isRunning() && swNextStage_.sF() < 1.5 && chocoClicked_)
+	{
+		ColorF color = Palette::White;
+		if (swNextStage_.sF() > 1.0) {
+			color = ColorF{ 1.0, Periodic::Square0_1(0.08ms) };
+		}
+		const double t = Clamp(swNextStage_.sF() / 0.30, 0.0, 1.0);
+		Vec2 pos = (*chocoClicked_)->pos() - Vec2(0, 5.0 * EaseOutQuint(t));
+		TextureAsset(levelAdjust_ == 1 ? U"good" : U"miss").drawAt(pos, color);
+	}
+
+
 }
 
 void MainScene::setNewStage_()
@@ -202,6 +219,8 @@ void MainScene::setNewStage_()
 
 	// 回答タイマー
 	swAnswer_.restart();
+
+	chocoClicked_ = none;
 }
 
 void MainScene::setBalloonText_(StringView text)

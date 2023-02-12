@@ -19,6 +19,8 @@ public:
 
 	void draw() const;
 
+	Vec2 pos() const;
+
 	void setPos(const Vec2& pos);
 
 	void moveTo(const Vec2& targetPos, double timeSec = 1.0);
