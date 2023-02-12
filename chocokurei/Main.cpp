@@ -17,6 +17,8 @@ void loadImages()
 
 void Main()
 {
+	Window::SetTitle(U"chocokurei2023 {}"_fmt(VersionText));
+
 	Scene::Resize(SceneSize);
 	Scene::SetResizeMode(ResizeMode::Keep);
 

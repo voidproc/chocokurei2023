@@ -6,7 +6,7 @@ inline const int ChocolateTypesCount = 12;
 inline const int ConditionCount = 8;
 
 inline const String TitleText = U"プロ生ちゃんチョコくれい";
-inline const String VersionText = U"Ver.20230214";
+inline const String VersionText = U"Ver.20230212";
 
 inline const Array<String> ConditionText = {
 	U"すきなチョコ",
