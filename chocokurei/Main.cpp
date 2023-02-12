@@ -31,9 +31,6 @@ void loadImages()
 	TextureAsset::Register(U"pronama-chan-fail", Resource(U"images/pronama-chan-fail.png"));
 	TextureAsset::Register(U"pronama-chan", Resource(U"images/pronama-chan.png"));
 	TextureAsset::Register(U"titlebg", Resource(U"images/titlebg.png"));
-	TextureAsset::Register(U"_choco", Resource(U"images/_choco.png"));
-	TextureAsset::Register(U"_judge", Resource(U"images/_judge.png"));
-	TextureAsset::Register(U"_layout", Resource(U"images/_layout.png"));
 }
 
 void Main()
