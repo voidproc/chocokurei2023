@@ -2,6 +2,7 @@
 
 #include "Chocolate.h"
 #include "Condition.h"
+#include "Pronamachan.h"
 
 class MainScene : public App::Scene
 {
@@ -28,9 +29,9 @@ private:
 	Optional<Chocolate*> chocoMouseOver_;
 	Optional<Chocolate*> chocoClicked_;
 	Stopwatch swNextStage_;
-	Timer timerPronamachanAnimate_;
 	Stopwatch swAnswer_;
 	int miss_ = 0;
+	Pronamachan pronamachan_;
 
 	void setNewStage_();
 	Condition randomCondition_() const;
@@ -39,7 +40,6 @@ private:
 	bool isMouseActionEnabled_() const;
 	void checkChocoAreaMouseOver_();
 
-	void drawPronamachan_() const;
 	void drawBalloon_() const;
 	void drawBg_() const;
 };

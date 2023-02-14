@@ -6,13 +6,12 @@ MainScene::MainScene(const InitData& init)
 	: IScene{ init }, choco_{}
 {
 	setNewStage_();
-
-	timerPronamachanAnimate_.set(Duration(Random(2.0, 5.0)));
-	timerPronamachanAnimate_.start();
 }
 
 void MainScene::update()
 {
+	pronamachan_.update();
+
 	for (auto& choco : choco_)
 	{
 		choco.update();
@@ -56,6 +55,7 @@ void MainScene::update()
 				setBalloonText_(FailedText.choice());
 				levelAdjust_ = -1;
 				miss_++;
+				pronamachan_.miss();
 			}
 
 			// 回答タイマーストップ
@@ -92,21 +92,13 @@ void MainScene::update()
 			setNewStage_();
 		}
 	}
-
-	// アニメーション
-	if (timerPronamachanAnimate_.reachedZero())
-	{
-		timerPronamachanAnimate_.set(Duration(Random(2.0, 5.0)));
-		timerPronamachanAnimate_.start();
-	}
-
 }
 
 void MainScene::draw() const
 {
 	drawBg_();
 
-	drawPronamachan_();
+	pronamachan_.draw();
 
 	drawBalloon_();
 
@@ -119,6 +111,7 @@ void MainScene::draw() const
 	// 箱
 	TextureAsset(U"box-{}x{}"_fmt(row_, column_)).drawAt(Scene::Center());
 
+	// チョコ
 	for (const auto& choco : choco_)
 	{
 		choco.draw();
@@ -238,6 +231,9 @@ void MainScene::setNewStage_()
 	swAnswer_.restart();
 
 	chocoClicked_ = none;
+
+	// プロ生ちゃんの顔をリセット
+	pronamachan_.reset();
 }
 
 Condition MainScene::randomCondition_() const
@@ -345,31 +341,6 @@ void MainScene::checkChocoAreaMouseOver_()
 
 	chocoAreaMouseOver_ = none;
 	chocoMouseOver_ = none;
-}
-
-void MainScene::drawPronamachan_() const
-{
-	const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
-
-	if (levelAdjust_ == -1 && swNextStage_.isRunning())
-	{
-		double xd = 0;
-		if (swNextStage_.sF() < 0.3)
-		{
-			xd = 1.5 * Periodic::Sine1_1(0.15s);
-		}
-
-		TextureAsset(U"pronama-chan-fail").draw(basePos.movedBy(xd, 0));
-		return;
-	}
-
-	int frame = (int)((timerPronamachanAnimate_.duration().count() - timerPronamachanAnimate_.sF()) / 0.5 * 8);
-	if (frame >= 8)
-	{
-		frame = 0;
-	}
-
-	TextureAsset(U"pronama-chan")(Rect(32).movedBy(frame * 32, 0)).draw(basePos);
 }
 
 void MainScene::drawBalloon_() const
