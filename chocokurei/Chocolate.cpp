@@ -19,7 +19,7 @@ static const Array<ChocolateFeature> gChocolateFeatures = {
 
 
 Chocolate::Chocolate(int type)
-	: type_(type), feature_{ gChocolateFeatures[type] }, pos_{ 0, -100 }, targetPos_{}, srcPos_{}, moveTimeSec_(0)
+	: type_(type), feature_{ gChocolateFeatures[type] }, pos_{ 0, Random(-30, -100) }, targetPos_{}, srcPos_{}, moveTimeSec_(0)
 {
 	timerAnimate_.set(Duration(Random(1.0, 4.0)));
 	timerAnimate_.start();
@@ -112,3 +112,17 @@ void Chocolate::take()
 	swTake_.restart();
 }
 
+bool Chocolate::mouseOver() const
+{
+	return collision().mouseOver();
+}
+
+bool Chocolate::leftClicked() const
+{
+	return collision().leftClicked();
+}
+
+RectF Chocolate::collision() const
+{
+	return RectF{ Arg::center = pos_, 14 };
+}

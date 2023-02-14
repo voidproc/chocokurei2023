@@ -17,14 +17,13 @@ void MainScene::update()
 		choco.update();
 	}
 
-	checkChocoAreaMouseOver_();
+	checkChocoMouseState_();
 
 
 	// 回答残り時間
 
 	if (swAnswer_.isRunning() && swAnswer_.sF() > (4.0 + 1.1))
 	{
-
 		swAnswer_.pause();
 		balloon_.setText(TimeUpText.choice());
 		levelAdjust_ = -1;
@@ -32,20 +31,17 @@ void MainScene::update()
 		swNextStage_.restart();
 	}
 
-
 	// マウス操作
 
 	if (isMouseActionEnabled_())
 	{
 		// チョコがクリックされた
 
-		if (chocoAreaMouseOver_ && chocoAreaMouseOver_->leftClicked())
+		if (chocoClicked_)
 		{
-			(*chocoMouseOver_)->take();
+			(*chocoClicked_)->take();
 
-			chocoClicked_ = *chocoMouseOver_;
-
-			if (isFullFilledCondition_(**chocoMouseOver_, condition_))
+			if (isFullFilledCondition_(**chocoClicked_, condition_))
 			{
 				balloon_.setText(SuccessText.choice());
 				levelAdjust_ = 1;
@@ -130,10 +126,10 @@ void MainScene::draw() const
 
 	if (isMouseActionEnabled_())
 	{
-		if (chocoAreaMouseOver_)
+		if (chocoMouseOver_)
 		{
 			const ColorF areaColor = Sample({ Palette::Yellow, Palette::Cyan, Palette::Pink });
-			chocoAreaMouseOver_->drawFrame(0.0, 1.0, ColorF(areaColor, Periodic::Square0_1(100ms)));
+			(*chocoMouseOver_)->collision().drawFrame(0.0, 1.0, ColorF(areaColor, Periodic::Square0_1(100ms)));
 		}
 	}
 
@@ -183,26 +179,7 @@ void MainScene::setNewStage_()
 	}
 
 	// チョコ生成
-
-	choco_.clear();
-	chocoArea_.clear();
-
-	for (int i : step(row_ * column_))
-	{
-		const int chocoType = Random(0, ChocolateTypesCount - 1);
-		choco_.emplace_back<Chocolate>(chocoType);
-
-		choco_.back().setPos(Vec2(0, Random(-30, -100)));
-
-		const double distance = 16.0;
-		const double x = (i % column_) * distance - (distance * (column_ - 1)) / 2;
-		const double y = (i / column_) * distance - (distance * (row_ - 1)) / 2;
-		choco_.back().moveTo(Vec2(x, y) + Scene::Center(), 0.8 + Random(-0.2, 0.2));
-
-		// 各チョコの当たり判定も生成しておく
-		const Size areaSize{ 14, 14 };
-		chocoArea_.emplace_back(Vec2(x, y) - areaSize/2 + Scene::Center(), areaSize);
-	}
+	setNewChocolates_();
 
 	// 条件を選ぶ
 	// 選んでも大丈夫な条件が出るまで待つ
@@ -234,6 +211,23 @@ void MainScene::setNewStage_()
 
 	// プロ生ちゃんの顔をリセット
 	pronamachan_.reset();
+}
+
+void MainScene::setNewChocolates_()
+{
+	choco_.clear();
+
+	for (int i : step(row_* column_))
+	{
+		const int chocoType = Random(0, ChocolateTypesCount - 1);
+		auto& newChoco = choco_.emplace_back<Chocolate>(chocoType);
+
+		const double distance = 16.0;
+		const double x = (i % column_) * distance - (distance * (column_ - 1)) / 2;
+		const double y = (i / column_) * distance - (distance * (row_ - 1)) / 2;
+		newChoco.moveTo(Vec2(x, y) + Scene::Center(), 0.8 + Random(-0.2, 0.2));
+	}
+
 }
 
 Condition MainScene::randomCondition_() const
@@ -314,27 +308,30 @@ bool MainScene::isMouseActionEnabled_() const
 	return swWaitMouseAction_.isRunning() && swWaitMouseAction_.sF() > 1.1;
 }
 
-void MainScene::checkChocoAreaMouseOver_()
+void MainScene::checkChocoMouseState_()
 {
+	chocoMouseOver_ = none;
+
 	if (!isMouseActionEnabled_())
 	{
-		chocoAreaMouseOver_ = none;
-		chocoMouseOver_ = none;
 		return;
 	}
 
-	for (auto [i, area] : Indexed(chocoArea_))
+	for (auto& choco : choco_)
 	{
-		if (area.mouseOver())
+		if (choco.leftClicked())
 		{
-			chocoAreaMouseOver_ = area;
-			chocoMouseOver_ = &choco_[i];
+			chocoMouseOver_ = &choco;
+			chocoClicked_ = &choco;
+			return;
+		}
+
+		if (choco.mouseOver())
+		{
+			chocoMouseOver_ = &choco;
 			return;
 		}
 	}
-
-	chocoAreaMouseOver_ = none;
-	chocoMouseOver_ = none;
 }
 
 void MainScene::drawBg_() const

@@ -23,8 +23,6 @@ private:
 	int row_ = 3;
 	Condition condition_;
 	Stopwatch swWaitMouseAction_;
-	Array<RectF> chocoArea_;
-	Optional<RectF> chocoAreaMouseOver_;
 	Optional<Chocolate*> chocoMouseOver_;
 	Optional<Chocolate*> chocoClicked_;
 	Stopwatch swNextStage_;
@@ -34,10 +32,11 @@ private:
 	Balloon balloon_;
 
 	void setNewStage_();
+	void setNewChocolates_();
 	Condition randomCondition_() const;
 	bool isFullFilledCondition_(const Chocolate& target, Condition cond);
 	bool isMouseActionEnabled_() const;
-	void checkChocoAreaMouseOver_();
+	void checkChocoMouseState_();
 
 	void drawBg_() const;
 };

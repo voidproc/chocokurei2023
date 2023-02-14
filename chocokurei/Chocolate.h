@@ -23,6 +23,12 @@ public:
 
 	void take();
 
+	bool mouseOver() const;
+
+	bool leftClicked() const;
+
+	RectF collision() const;
+
 private:
 	int type_;
 	const ChocolateFeature& feature_;
