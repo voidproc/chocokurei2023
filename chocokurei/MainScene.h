@@ -34,10 +34,11 @@ private:
 
 	void setNewStage_();
 	void setBalloonText_(StringView text);
-	void drawPronamachan_() const;
-	void drawBalloon_() const;
-	void drawBg_() const;
 	bool isFullFilledCondition_(const Chocolate& target, Condition cond);
 	bool isMouseActionEnabled_() const;
 	void checkChocoAreaMouseOver_();
+
+	void drawPronamachan_() const;
+	void drawBalloon_() const;
+	void drawBg_() const;
 };

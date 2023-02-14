@@ -2,7 +2,7 @@
 #include "TitleScene.h"
 #include "MainScene.h"
 #include "EndingScene.h"
-#include "const.h"
+#include "Constants.h"
 
 void loadImages()
 {
@@ -33,26 +33,29 @@ void loadImages()
 	TextureAsset::Register(U"titlebg", Resource(U"images/titlebg.png"));
 }
 
+void loadFonts()
+{
+	FontAsset::Register(U"main", 12, Resource(U"fonts/k8x12L.ttf"), FontStyle::Bitmap);
+	FontAsset::Register(U"mainb", 12, Resource(U"fonts/k8x12L.ttf"), FontStyle::BoldBitmap);
+}
+
 void Main()
 {
 	Scene::SetBackground(Palette::Black);
 
-	Window::SetTitle(U"chocokurei2023 {}"_fmt(VersionText));
+	Window::SetTitle(U"{} {}"_fmt(WindowTitleText, VersionText));
 
 	Scene::Resize(SceneSize);
 	Scene::SetResizeMode(ResizeMode::Keep);
 
-	int scale = DefaultSceneScale;
-	Window::Resize(SceneSize * scale);
+	Window::Resize(SceneSize * DefaultSceneScale);
 
 	Scene::SetTextureFilter(TextureFilter::Nearest);
 
 	const ScopedRenderStates2D renderState{ SamplerState::ClampNearest };
 
 	// アセット
-
-	FontAsset::Register(U"main", 12, Resource(U"fonts/k8x12L.ttf"), FontStyle::Bitmap);
-	FontAsset::Register(U"mainb", 12, Resource(U"fonts/k8x12L.ttf"), FontStyle::BoldBitmap);
+	loadFonts();
 
 	loadImages();
 

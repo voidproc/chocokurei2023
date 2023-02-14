@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "TitleScene.h"
-#include "const.h"
+#include "Constants.h"
 
 TitleScene::TitleScene(const InitData& init)
 	: IScene{ init }, scale_(DefaultSceneScale)
@@ -18,13 +18,13 @@ void TitleScene::update()
 
 		if (KeyUp.down())
 		{
-			scale_ = Clamp(scale_ + 1, 2, 8);
+			scale_ = Clamp(scale_ + 1, SceneScaleMin, SceneScaleMax);
 			Window::Resize(SceneSize * scale_);
 		}
 
 		if (KeyDown.down())
 		{
-			scale_ = Clamp(scale_ - 1, 2, 8);
+			scale_ = Clamp(scale_ - 1, SceneScaleMin, SceneScaleMax);
 			Window::Resize(SceneSize * scale_);
 		}
 	}
@@ -52,11 +52,7 @@ void TitleScene::draw() const
 	if (swScene_.sF() > 1.0)
 	{
 		const ColorF textColor = ColorF(Palette::Brown, 0.5 + 0.5 * Periodic::Square0_1(1s));
-		const Array<String> text = {
-			U"マウスクリックでスタートだよ",
-			U"↑・↓キーで画面の大きさを変えられるよ",
-		};
-		FontAsset(U"main")(text[1-(int)Periodic::Square0_1(4s)]).drawAt(Scene::Rect().bottomCenter().movedBy(0, -32), textColor);
+		FontAsset(U"main")(TitleGuidanceText[1-(int)Periodic::Square0_1(4s)]).drawAt(Scene::Rect().bottomCenter().movedBy(0, -32), textColor);
 	}
 
 	// フェード

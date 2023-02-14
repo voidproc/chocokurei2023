@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "MainScene.h"
-#include "const.h"
+#include "Constants.h"
 
 MainScene::MainScene(const InitData& init)
 	: IScene{ init }, choco_{}
@@ -270,55 +270,6 @@ void MainScene::setBalloonText_(StringView text)
 	swBalloonTextAnimate_.restart();
 }
 
-void MainScene::drawPronamachan_() const
-{
-	const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
-
-	if (levelAdjust_ == -1 && swNextStage_.isRunning())
-	{
-		double xd = 0;
-		if (swNextStage_.sF() < 0.3)
-		{
-			xd = 1.5 * Periodic::Sine1_1(0.15s);
-		}
-
-		TextureAsset(U"pronama-chan-fail").draw(basePos.movedBy(xd, 0));
-		return;
-	}
-
-	int frame = (int)((timerPronamachanAnimate_.duration().count() - timerPronamachanAnimate_.sF()) / 0.5 * 8);
-	if (frame >= 8)
-	{
-		frame = 0;
-	}
-
-	TextureAsset(U"pronama-chan")(Rect(32).movedBy(frame * 32, 0)).draw(basePos);
-}
-
-void MainScene::drawBalloon_() const
-{
-	const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
-
-	TextureAsset(U"balloon").draw(basePos);
-
-	StringView balloonText = balloonText_.substrView(0, (int)(32 * swBalloonTextAnimate_.sF()));
-	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12 + 1), ColorF(0, 0.1));
-	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12), Color(U"#421d12"));
-}
-
-void MainScene::drawBg_() const
-{
-	Scene::SetBackground(Color(U"#dc678c"));
-
-	const double distance = 114.0;
-	const double offset = distance * Periodic::Sawtooth0_1(8.0s);
-	const ColorF color{ Palette::White, 0.2 + 0.5 * Periodic::Sine0_1(2.4s)};
-	TextureAsset(U"bg").draw(Vec2(0, offset), color);
-	TextureAsset(U"bg").draw(Vec2(0, offset + distance), color);
-	TextureAsset(U"bg").draw(Vec2(0, offset - distance), color);
-
-}
-
 bool MainScene::isFullFilledCondition_(const Chocolate& target, Condition cond)
 {
 	switch (cond)
@@ -390,4 +341,53 @@ void MainScene::checkChocoAreaMouseOver_()
 
 	chocoAreaMouseOver_ = none;
 	chocoMouseOver_ = none;
+}
+
+void MainScene::drawPronamachan_() const
+{
+	const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
+
+	if (levelAdjust_ == -1 && swNextStage_.isRunning())
+	{
+		double xd = 0;
+		if (swNextStage_.sF() < 0.3)
+		{
+			xd = 1.5 * Periodic::Sine1_1(0.15s);
+		}
+
+		TextureAsset(U"pronama-chan-fail").draw(basePos.movedBy(xd, 0));
+		return;
+	}
+
+	int frame = (int)((timerPronamachanAnimate_.duration().count() - timerPronamachanAnimate_.sF()) / 0.5 * 8);
+	if (frame >= 8)
+	{
+		frame = 0;
+	}
+
+	TextureAsset(U"pronama-chan")(Rect(32).movedBy(frame * 32, 0)).draw(basePos);
+}
+
+void MainScene::drawBalloon_() const
+{
+	const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
+
+	TextureAsset(U"balloon").draw(basePos);
+
+	StringView balloonText = balloonText_.substrView(0, (int)(32 * swBalloonTextAnimate_.sF()));
+	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12 + 1), ColorF(0, 0.1));
+	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12), Color(U"#421d12"));
+}
+
+void MainScene::drawBg_() const
+{
+	Scene::SetBackground(Color(U"#dc678c"));
+
+	const double distance = 114.0;
+	const double offset = distance * Periodic::Sawtooth0_1(8.0s);
+	const ColorF color{ Palette::White, 0.2 + 0.5 * Periodic::Sine0_1(2.4s) };
+	TextureAsset(U"bg").draw(Vec2(0, offset), color);
+	TextureAsset(U"bg").draw(Vec2(0, offset + distance), color);
+	TextureAsset(U"bg").draw(Vec2(0, offset - distance), color);
+
 }

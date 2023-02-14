@@ -318,8 +318,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chocolate.h" />
+    <ClInclude Include="ChocolateFeature.h" />
     <ClInclude Include="Condition.h" />
-    <ClInclude Include="const.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="EndingScene.h" />
     <ClInclude Include="EndingType.h" />
     <ClInclude Include="MainScene.h" />
