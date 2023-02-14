@@ -159,6 +159,9 @@
     <ClCompile Include="Pronamachan.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Balloon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="App\icon.ico">
@@ -819,6 +822,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Pronamachan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Balloon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

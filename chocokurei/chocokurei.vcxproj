@@ -113,6 +113,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Balloon.cpp" />
     <ClCompile Include="Chocolate.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -318,6 +319,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Balloon.h" />
     <ClInclude Include="Chocolate.h" />
     <ClInclude Include="ChocolateFeature.h" />
     <ClInclude Include="Condition.h" />

@@ -3,6 +3,7 @@
 #include "Chocolate.h"
 #include "Condition.h"
 #include "Pronamachan.h"
+#include "Balloon.h"
 
 class MainScene : public App::Scene
 {
@@ -15,8 +16,6 @@ public:
 
 private:
 	Stopwatch swScene_{ StartImmediately::Yes };
-	Stopwatch swBalloonTextAnimate_;
-	String balloonText_;
 	Array<Chocolate> choco_;
 	int level_ = 1;
 	int levelAdjust_ = 0;
@@ -32,14 +31,13 @@ private:
 	Stopwatch swAnswer_;
 	int miss_ = 0;
 	Pronamachan pronamachan_;
+	Balloon balloon_;
 
 	void setNewStage_();
 	Condition randomCondition_() const;
-	void setBalloonText_(StringView text);
 	bool isFullFilledCondition_(const Chocolate& target, Condition cond);
 	bool isMouseActionEnabled_() const;
 	void checkChocoAreaMouseOver_();
 
-	void drawBalloon_() const;
 	void drawBg_() const;
 };

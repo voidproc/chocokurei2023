@@ -26,7 +26,7 @@ void MainScene::update()
 	{
 
 		swAnswer_.pause();
-		setBalloonText_(TimeUpText.choice());
+		balloon_.setText(TimeUpText.choice());
 		levelAdjust_ = -1;
 		swWaitMouseAction_.pause();
 		swNextStage_.restart();
@@ -47,12 +47,12 @@ void MainScene::update()
 
 			if (isFullFilledCondition_(**chocoMouseOver_, condition_))
 			{
-				setBalloonText_(SuccessText.choice());
+				balloon_.setText(SuccessText.choice());
 				levelAdjust_ = 1;
 			}
 			else
 			{
-				setBalloonText_(FailedText.choice());
+				balloon_.setText(FailedText.choice());
 				levelAdjust_ = -1;
 				miss_++;
 				pronamachan_.miss();
@@ -100,7 +100,7 @@ void MainScene::draw() const
 
 	pronamachan_.draw();
 
-	drawBalloon_();
+	balloon_.draw();
 
 	// ステージ名
 	const auto stagenameRect = RectF{ 0, 12, Scene::Width(), 16 };
@@ -222,7 +222,7 @@ void MainScene::setNewStage_()
 		}
 	}
 
-	setBalloonText_(ConditionText[static_cast<int>(condition_)] + ConditionTextEnd.choice());
+	balloon_.setText(ConditionText[static_cast<int>(condition_)] + ConditionTextEnd.choice());
 
 	// 少し待機した後、マウス操作を有効にする
 	swWaitMouseAction_.restart();
@@ -262,12 +262,6 @@ Condition MainScene::randomCondition_() const
 	});
 
 	return DiscreteSample(conditions, distribution);
-}
-
-void MainScene::setBalloonText_(StringView text)
-{
-	balloonText_ = text;
-	swBalloonTextAnimate_.restart();
 }
 
 bool MainScene::isFullFilledCondition_(const Chocolate& target, Condition cond)
@@ -341,17 +335,6 @@ void MainScene::checkChocoAreaMouseOver_()
 
 	chocoAreaMouseOver_ = none;
 	chocoMouseOver_ = none;
-}
-
-void MainScene::drawBalloon_() const
-{
-	const Vec2 basePos = Scene::Rect().bl().movedBy(0, -32);
-
-	TextureAsset(U"balloon").draw(basePos);
-
-	StringView balloonText = balloonText_.substrView(0, (int)(32 * swBalloonTextAnimate_.sF()));
-	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12 + 1), ColorF(0, 0.1));
-	FontAsset(U"main")(balloonText).draw(basePos.movedBy(42, 12), Color(U"#421d12"));
 }
 
 void MainScene::drawBg_() const
