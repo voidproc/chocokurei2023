@@ -33,6 +33,7 @@ private:
 	int miss_ = 0;
 
 	void setNewStage_();
+	Condition randomCondition_() const;
 	void setBalloonText_(StringView text);
 	bool isFullFilledCondition_(const Chocolate& target, Condition cond);
 	bool isMouseActionEnabled_() const;

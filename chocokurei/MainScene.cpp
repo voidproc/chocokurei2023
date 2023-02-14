@@ -211,44 +211,20 @@ void MainScene::setNewStage_()
 		chocoArea_.emplace_back(Vec2(x, y) - areaSize/2 + Scene::Center(), areaSize);
 	}
 
-
 	// 条件を選ぶ
-
-	Array<Condition> condToSelect = {
-		Condition::Any,
-		Condition::IsHeartShape,
-		Condition::IsRoundShape,
-		Condition::IsSquareShape,
-		Condition::IsBrownColor,
-		Condition::IsWhiteColor,
-		Condition::IsMostAmount,
-		Condition::IsLeastAmount,
-	};
-
-	DiscreteDistribution condDist(
-	{
-		2,
-		10,
-		10,
-		10,
-		9,
-		9,
-		25,
-		25,
-	});
-
 	// 選んでも大丈夫な条件が出るまで待つ
 
 	bool validCondition = false;
 	while (!validCondition)
 	{
-		condition_ = DiscreteSample(condToSelect, condDist);
+		condition_ = randomCondition_();
 
 		for (const auto& choco : choco_)
 		{
 			if (isFullFilledCondition_(choco, condition_))
 			{
 				validCondition = true;
+				break;
 			}
 		}
 	}
@@ -262,6 +238,34 @@ void MainScene::setNewStage_()
 	swAnswer_.restart();
 
 	chocoClicked_ = none;
+}
+
+Condition MainScene::randomCondition_() const
+{
+	const Array<Condition> conditions = {
+		Condition::Any,
+		Condition::IsHeartShape,
+		Condition::IsRoundShape,
+		Condition::IsSquareShape,
+		Condition::IsBrownColor,
+		Condition::IsWhiteColor,
+		Condition::IsMostAmount,
+		Condition::IsLeastAmount,
+	};
+
+	DiscreteDistribution distribution(
+	{
+		2,
+		10,
+		10,
+		10,
+		9,
+		9,
+		25,
+		25,
+	});
+
+	return DiscreteSample(conditions, distribution);
 }
 
 void MainScene::setBalloonText_(StringView text)
