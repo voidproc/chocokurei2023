@@ -39,9 +39,9 @@ void MainScene::update()
 
 		if (chocoClicked_)
 		{
-			(*chocoClicked_)->take();
+			chocoClicked_->take();
 
-			if (isFullFilledCondition_(**chocoClicked_, condition_))
+			if (isFullFilledCondition_(*chocoClicked_, condition_))
 			{
 				balloon_.setText(SuccessText.choice());
 				levelAdjust_ = 1;
@@ -129,7 +129,7 @@ void MainScene::draw() const
 		if (chocoMouseOver_)
 		{
 			const ColorF areaColor = Sample({ Palette::Yellow, Palette::Cyan, Palette::Pink });
-			(*chocoMouseOver_)->collision().drawFrame(0.0, 1.0, ColorF(areaColor, Periodic::Square0_1(100ms)));
+			chocoMouseOver_->collision().drawFrame(0.0, 1.0, ColorF(areaColor, Periodic::Square0_1(100ms)));
 		}
 	}
 
@@ -142,7 +142,7 @@ void MainScene::draw() const
 			color = ColorF{ 1.0, Periodic::Square0_1(0.08ms) };
 		}
 		const double t = Clamp(swNextStage_.sF() / 0.30, 0.0, 1.0);
-		Vec2 pos = (*chocoClicked_)->pos() - Vec2(0, 5.0 * EaseOutQuint(t));
+		Vec2 pos = chocoClicked_->pos() - Vec2(0, 5.0 * EaseOutQuint(t));
 		TextureAsset(levelAdjust_ == 1 ? U"good" : U"miss").drawAt(pos.asPoint(), color);
 	}
 }
@@ -184,8 +184,8 @@ void MainScene::setNewStage_()
 	// 条件を選ぶ
 	// 選んでも大丈夫な条件が出るまで待つ
 
-	bool validCondition = false;
-	while (!validCondition)
+	bool isValidCondition = false;
+	while (!isValidCondition)
 	{
 		condition_ = randomCondition_();
 
@@ -193,7 +193,7 @@ void MainScene::setNewStage_()
 		{
 			if (isFullFilledCondition_(choco, condition_))
 			{
-				validCondition = true;
+				isValidCondition = true;
 				break;
 			}
 		}
@@ -321,14 +321,14 @@ void MainScene::checkChocoMouseState_()
 	{
 		if (choco.leftClicked())
 		{
-			chocoMouseOver_ = &choco;
-			chocoClicked_ = &choco;
+			chocoMouseOver_ = choco;
+			chocoClicked_ = choco;
 			return;
 		}
 
 		if (choco.mouseOver())
 		{
-			chocoMouseOver_ = &choco;
+			chocoMouseOver_ = choco;
 			return;
 		}
 	}

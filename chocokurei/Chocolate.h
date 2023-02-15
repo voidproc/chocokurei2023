@@ -31,7 +31,6 @@ public:
 
 private:
 	int type_;
-	const ChocolateFeature& feature_;
 	Vec2 pos_;
 	Vec2 targetPos_;
 	Vec2 srcPos_;

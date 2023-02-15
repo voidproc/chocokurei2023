@@ -23,8 +23,8 @@ private:
 	int row_ = 3;
 	Condition condition_;
 	Stopwatch swWaitMouseAction_;
-	Optional<Chocolate*> chocoMouseOver_;
-	Optional<Chocolate*> chocoClicked_;
+	Optional<Chocolate> chocoMouseOver_;
+	Optional<Chocolate> chocoClicked_;
 	Stopwatch swNextStage_;
 	Stopwatch swAnswer_;
 	int miss_ = 0;

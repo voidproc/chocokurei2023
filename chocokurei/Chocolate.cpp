@@ -19,7 +19,7 @@ static const Array<ChocolateFeature> gChocolateFeatures = {
 
 
 Chocolate::Chocolate(int type)
-	: type_(type), feature_{ gChocolateFeatures[type] }, pos_{ 0, Random(-30, -100) }, targetPos_{}, srcPos_{}, moveTimeSec_(0)
+	: type_(type), pos_{ 0, Random(-30, -100) }, targetPos_{}, srcPos_{}, moveTimeSec_(0)
 {
 	timerAnimate_.set(Duration(Random(1.0, 4.0)));
 	timerAnimate_.start();
@@ -44,7 +44,7 @@ void Chocolate::update()
 
 void Chocolate::draw() const
 {
-	const auto texture = TextureAsset(feature_.name);
+	const auto texture = TextureAsset(feature().name);
 	int frame = 0;
 
 	if (texture.width() > 16)
@@ -104,7 +104,7 @@ int Chocolate::type() const
 
 const ChocolateFeature& Chocolate::feature() const
 {
-	return feature_;
+	return gChocolateFeatures[type_];
 }
 
 void Chocolate::take()
