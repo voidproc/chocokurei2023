@@ -18,15 +18,29 @@ void MainScene::update()
 
 	if (swAnswer_.isRunning() && swAnswer_.sF() > (4.0 + 1.1))
 	{
-		swAnswer_.pause();
 		balloon_.setText(TimeUpText.choice());
 		levelAdjust_ = -1;
-		swNextStage_.restart();
 
+		// 回答タイマーストップ
+		swAnswer_.pause();
+
+		// マウス操作ストップ
 		chocolateBox_.enableMouseAction(false);
+		swWaitMouseAction_.pause();
+
+		// すこし待機した後、次のステージへ
+		swNextStage_.restart();
 	}
 
 	// マウス操作
+
+	if (swWaitMouseAction_.isRunning() && swWaitMouseAction_.sF() > 1.1)
+	{
+		if (not chocolateBox_.isMouseActionEnabled())
+		{
+			chocolateBox_.enableMouseAction(true);
+		}
+	}
 
 	if (chocolateBox_.isMouseActionEnabled())
 	{
@@ -34,9 +48,9 @@ void MainScene::update()
 
 		if (auto chocoClicked = chocolateBox_.chocolateClicked(); chocoClicked)
 		{
-			chocoClicked->take();
+			(*chocoClicked)->take();
 
-			if (chocolateBox_.fullfill(*chocoClicked, condition_))
+			if (chocolateBox_.fullfill(**chocoClicked, condition_))
 			{
 				balloon_.setText(SuccessText.choice());
 				levelAdjust_ = 1;
@@ -54,6 +68,7 @@ void MainScene::update()
 
 			// マウス操作ストップ
 			chocolateBox_.enableMouseAction(false);
+			swWaitMouseAction_.pause();
 
 			// すこし待機した後、次のステージへ
 			swNextStage_.restart();
@@ -117,7 +132,7 @@ void MainScene::draw() const
 		if (auto chocoMouseOver = chocolateBox_.chocolateMouseOver(); chocoMouseOver)
 		{
 			const ColorF areaColor = Sample({ Palette::Yellow, Palette::Cyan, Palette::Pink });
-			chocoMouseOver->collision().drawFrame(0.0, 1.0, ColorF(areaColor, Periodic::Square0_1(100ms)));
+			(*chocoMouseOver)->collision().drawFrame(0.0, 1.0, ColorF(areaColor, Periodic::Square0_1(100ms)));
 		}
 	}
 
@@ -131,7 +146,7 @@ void MainScene::draw() const
 			color = ColorF{ 1.0, Periodic::Square0_1(0.08ms) };
 		}
 		const double t = Clamp(swNextStage_.sF() / 0.30, 0.0, 1.0);
-		Vec2 pos = chocoClicked->pos() - Vec2(0, 5.0 * EaseOutQuint(t));
+		Vec2 pos = (*chocoClicked)->pos() - Vec2(0, 5.0 * EaseOutQuint(t));
 		TextureAsset(levelAdjust_ == 1 ? U"good" : U"miss").drawAt(pos.asPoint(), color);
 	}
 }
@@ -183,12 +198,10 @@ void MainScene::setNewStage_()
 	balloon_.setText(ConditionText[static_cast<int>(condition_)] + ConditionTextEnd.choice());
 
 	// 少し待機した後、マウス操作を有効にする
-	chocolateBox_.enableMouseAction(true);
+	swWaitMouseAction_.restart();
 
 	// 回答タイマー
 	swAnswer_.restart();
-
-	//chocoClicked_ = none;
 
 	// プロ生ちゃんの顔をリセット
 	pronamachan_.reset();

@@ -28,19 +28,19 @@ public:
 
 	bool isMouseActionEnabled() const;
 
-	Optional<Chocolate> chocolateMouseOver();
-	const Optional<Chocolate> chocolateMouseOver() const;
+	Optional<Chocolate*> chocolateMouseOver();
+	const Optional<Chocolate*> chocolateMouseOver() const;
 
-	Optional<Chocolate> chocolateClicked();
-	const Optional<Chocolate> chocolateClicked() const;
+	Optional<Chocolate*> chocolateClicked();
+	const Optional<Chocolate*> chocolateClicked() const;
 
 private:
 	int row_;
 	int column_;
 	Array<Chocolate> choco_;
-	Optional<Chocolate> chocoMouseOver_;
-	Optional<Chocolate> chocoClicked_;
-	Stopwatch swWaitMouseAction_;
+	Optional<Chocolate*> chocoMouseOver_;
+	Optional<Chocolate*> chocoClicked_;
+	bool enabledMouseAction_;
 
 	void checkChocoMouseState_();
 

@@ -26,6 +26,8 @@ private:
 	Pronamachan pronamachan_;
 	Balloon balloon_;
 	ChocolateBox chocolateBox_;
+	Stopwatch swWaitMouseAction_;
+
 
 	void setNewStage_();
 	Condition randomCondition_() const;

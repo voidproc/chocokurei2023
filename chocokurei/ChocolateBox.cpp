@@ -128,15 +128,37 @@ bool ChocolateBox::anyFullfill(Condition condition) const
 
 void ChocolateBox::enableMouseAction(bool enable)
 {
+	enabledMouseAction_ = enable;
+
 	if (enable)
 	{
-		swWaitMouseAction_.restart();
 		chocoClicked_ = none;
 	}
-	else
-	{
-		swWaitMouseAction_.pause();
-	}
+}
+
+bool ChocolateBox::isMouseActionEnabled() const
+{
+	return enabledMouseAction_;
+}
+
+Optional<Chocolate*> ChocolateBox::chocolateMouseOver()
+{
+	return chocoMouseOver_;
+}
+
+const Optional<Chocolate*> ChocolateBox::chocolateMouseOver() const
+{
+	return chocoMouseOver_;
+}
+
+Optional<Chocolate*> ChocolateBox::chocolateClicked()
+{
+	return chocoClicked_;
+}
+
+const Optional<Chocolate*> ChocolateBox::chocolateClicked() const
+{
+	return chocoClicked_;
 }
 
 void ChocolateBox::checkChocoMouseState_()
@@ -152,40 +174,15 @@ void ChocolateBox::checkChocoMouseState_()
 	{
 		if (choco.leftClicked())
 		{
-			chocoMouseOver_ = choco;
-			chocoClicked_ = choco;
+			chocoMouseOver_ = &choco;
+			chocoClicked_ = &choco;
 			return;
 		}
 
 		if (choco.mouseOver())
 		{
-			chocoMouseOver_ = choco;
+			chocoMouseOver_ = &choco;
 			return;
 		}
 	}
-}
-
-bool ChocolateBox::isMouseActionEnabled() const
-{
-	return swWaitMouseAction_.isRunning() && swWaitMouseAction_.sF() > 1.1;
-}
-
-Optional<Chocolate> ChocolateBox::chocolateMouseOver()
-{
-	return chocoMouseOver_;
-}
-
-const Optional<Chocolate> ChocolateBox::chocolateMouseOver() const
-{
-	return chocoMouseOver_;
-}
-
-Optional<Chocolate> ChocolateBox::chocolateClicked()
-{
-	return chocoClicked_;
-}
-
-const Optional<Chocolate> ChocolateBox::chocolateClicked() const
-{
-	return chocoClicked_;
 }
