@@ -5,7 +5,7 @@
 class Chocolate
 {
 public:
-	Chocolate(int type);
+	Chocolate(int type = 0);
 
 	void update();
 

@@ -115,6 +115,7 @@
   <ItemGroup>
     <ClCompile Include="Balloon.cpp" />
     <ClCompile Include="Chocolate.cpp" />
+    <ClCompile Include="ChocolateBox.cpp" />
     <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainScene.cpp" />
@@ -321,6 +322,7 @@
   <ItemGroup>
     <ClInclude Include="Balloon.h" />
     <ClInclude Include="Chocolate.h" />
+    <ClInclude Include="ChocolateBox.h" />
     <ClInclude Include="ChocolateFeature.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Constants.h" />

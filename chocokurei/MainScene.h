@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "Chocolate.h"
+#include "ChocolateBox.h"
 #include "Condition.h"
 #include "Pronamachan.h"
 #include "Balloon.h"
@@ -16,27 +17,18 @@ public:
 
 private:
 	Stopwatch swScene_{ StartImmediately::Yes };
-	Array<Chocolate> choco_;
 	int level_ = 1;
 	int levelAdjust_ = 0;
-	int column_ = 3;
-	int row_ = 3;
 	Condition condition_;
-	Stopwatch swWaitMouseAction_;
-	Optional<Chocolate> chocoMouseOver_;
-	Optional<Chocolate> chocoClicked_;
 	Stopwatch swNextStage_;
 	Stopwatch swAnswer_;
 	int miss_ = 0;
 	Pronamachan pronamachan_;
 	Balloon balloon_;
+	ChocolateBox chocolateBox_;
 
 	void setNewStage_();
-	void setNewChocolates_();
 	Condition randomCondition_() const;
-	bool isFullFilledCondition_(const Chocolate& target, Condition cond);
-	bool isMouseActionEnabled_() const;
-	void checkChocoMouseState_();
 
 	void drawBg_() const;
 };
