@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Chocolate.h"
+#include "SpriteSheet.h"
 
 static const Array<ChocolateFeature> gChocolateFeatures = {
 	// name,      heart, square,round, brown, white
@@ -44,18 +45,10 @@ void Chocolate::update()
 
 void Chocolate::draw() const
 {
-	const auto texture = TextureAsset(feature().name);
-	int frame = 0;
-
-	if (texture.width() > 16)
+	int frame = (int)((timerAnimate_.duration().count() - timerAnimate_.sF()) / 0.5 * 8);
+	if (frame >= 8)
 	{
-		//アニメあり
-
-		frame = (int)((timerAnimate_.duration().count() - timerAnimate_.sF()) / 0.5 * 8);
-		if (frame >= 8)
-		{
-			frame = 0;
-		}
+		frame = 0;
 	}
 
 	// takeされたら少し点滅して消える
@@ -74,7 +67,7 @@ void Chocolate::draw() const
 		}
 	}
 
-	texture(Rect(16).movedBy(frame * 16, 0)).drawAt(pos_, ColorF(Palette::White, alpha));
+	SpriteSheet::frame(feature().name, frame, 8).drawAt(pos_, ColorF(Palette::White, alpha));
 }
 
 Vec2 Chocolate::pos() const

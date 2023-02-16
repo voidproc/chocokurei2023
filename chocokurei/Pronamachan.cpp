@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Pronamachan.h"
+#include "SpriteSheet.h"
 
 Pronamachan::Pronamachan()
 {
@@ -37,7 +38,7 @@ void Pronamachan::draw() const
 		frame = 0;
 	}
 
-	TextureAsset(U"pronama-chan")(Rect(32).movedBy(frame * 32, 0)).draw(basePos);
+	SpriteSheet::frame(U"pronama-chan", frame, 8).draw(basePos);
 }
 
 void Pronamachan::miss()
